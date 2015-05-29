@@ -2,6 +2,12 @@
 
 A Combinator plugin for CakePHP 2.1 - combine, minify and cache Javascript and CSS files for faster load times.
 
+## Deprecated Project ##
+
+As of now (June 2013) this plugin no longer fits in with my workflow, and I'm no longer maintaining it. The javascript compression uses [JSMin.php](https://code.google.com/p/minify/source/browse/min/lib/JSMin.php), which is old and unmaintained. I found the more javascript I wrote, the more chance I had of coming across an error with the compressed version of my code - so that wasn't cool. There's better JS compression solutions available these days.
+
+If you're after a similar project that's still maintained, try [Highstrike's cakephp-compressor](https://github.com/Highstrike/cakephp-compressor).
+
 ## Introduction ##
 
 
@@ -10,6 +16,8 @@ This plugin is based on [Cake 1.3 Combinator Article from the Bakery](http://bak
 The plugin is quick and easy to install. The installation instructions are somewhat long - but that's just to provide clarity.
 
 NOTE - [Mark Story's AssetCompress Plugin](https://github.com/markstory/asset_compress) is far more mature and feature rich that this plugin. This plugin is simpler and requires less configuration.
+
+UPDATE - [Highstrike's cakephp-compressor](https://github.com/Highstrike/cakephp-compressor) is a simple solution, like this one, but is still maintained.
 
 ## Features ##
 
@@ -68,6 +76,24 @@ You have the option to set the scripts to load asynchronously by setting the $as
 
 	echo $this->Combinator->scripts('js', true); // Output Javascript files with the async attribute
 	
+Now here if you want to append any js then you can do that by setting the $toEnd param to true
+
+	$this->Combinator->add_libs('js',array('js1','js2'),true);// append Javascript files at the end of the minified js
+
+same thing possible with css 
+
+	$this->Combinator->add_libs('css',array('css1','css2'),true);// append css files at the end of the minified css
+
+Now if you want to add any inline js or css to your minified js or minified css you can do that :
+	
+	$inlinejs =" /* your js code here */ ";
+	$this->Combinator->add_inline_code('js', $inlinejs);
+
+same with css
+
+	$inlinecss =" /* your css code here */ ";
+	$this->Combinator->add_inline_code('css', $inlinecss);
+
 However, I like to set it up as follows, so that my CSS and Javascript files are only minified and cached when I'm not in debug mode:
 
 	$cssFiles = array('default','contact','blog');
